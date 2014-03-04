@@ -40,7 +40,7 @@ func normalizeBase(b int, digits []int) {
 }
 
 func Decode(address string) []byte {
-	// Takes a ripple address and returns an MD5 sum suitable for
+	// Takes a ripple address and returns a []byte suitable for
 	// use with github.com/cupcake/sigil
 
 	alphabet := []byte("rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz")
@@ -55,7 +55,5 @@ func Decode(address string) []byte {
 
 	// Trim off the last 4 (checksum) bytes and extra leading zeros
 	// to end up with exactly 21 bytes
-	bytes = bytes[len(bytes)-25 : len(bytes)-4]
-
-	return bytes
+	return bytes[len(bytes)-25 : len(bytes)-4]
 }
