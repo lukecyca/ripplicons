@@ -1,7 +1,6 @@
 package ripplicons
 
 import (
-	"crypto/md5"
 	"fmt"
 	"testing"
 )
@@ -31,11 +30,11 @@ var decodeMD5Tests = []struct {
 
 func TestDecodeMD5(t *testing.T) {
 	for _, r := range decodeMD5Tests {
-		bytes := md5.Sum(Decode(r.address))
-		if fmt.Sprintf("%x", bytes) != r.expected {
+		md5 := Decode(r.address)
+		if fmt.Sprintf("%x", md5) != r.expected {
 			t.Errorf(
 				"For %s got %x, expected %s",
-				r.address, bytes, r.expected,
+				r.address, md5, r.expected,
 			)
 		}
 	}

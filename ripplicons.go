@@ -7,6 +7,7 @@ package ripplicons
 
 import (
 	"bytes"
+	"crypto/md5"
 	"math"
 )
 
@@ -46,7 +47,7 @@ func normalizeBase(b int, digits []int) {
 
 // Decode accepts a ripple address and returns a []byte suitable for
 // use with https://github.com/cupcake/sigil.
-func Decode(address string) []byte {
+func Decode(address string) [16]byte {
 	alphabet := []byte("rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz")
 	base58digits := []int{}
 
@@ -58,6 +59,7 @@ func Decode(address string) []byte {
 	bytes := toBytes(58, base58digits)
 
 	// Trim off the last 4 (checksum) bytes and extra leading zeros
-	// to end up with exactly 21 bytes
-	return bytes[len(bytes)-25 : len(bytes)-4]
+	// to end up with exactly 21 bytes.
+	// Sigil needs the md5 of that
+	return md5.Sum(bytes[len(bytes)-25 : len(bytes)-4])
 }
